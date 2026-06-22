@@ -27,8 +27,9 @@ const Home = () => {
       try {
         setLoading(true);
         const data = await getAllCountries();
-        setCountries(data);
-        setFilteredCountries(data);
+        const countriesArray = Array.isArray(data) ? data : [];
+        setCountries(countriesArray);
+        setFilteredCountries(countriesArray);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch countries");
@@ -41,7 +42,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    let result = countries;
+    let result = Array.isArray(countries) ? countries : [];
 
     if (searchTerm) {
       result = result.filter((country) =>
